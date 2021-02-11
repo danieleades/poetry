@@ -82,8 +82,6 @@ class VersionSolver:
                 next = self._choose_package_version()
 
             return self._result()
-        except Exception:
-            raise
         finally:
             self._log(
                 "Version solving took {:.3f} seconds.\n"

@@ -221,8 +221,6 @@ class Provider:
             package._source_url = url
             package._source_reference = reference
             package._source_resolved_reference = revision
-        except Exception:
-            raise
         finally:
             safe_rmtree(str(tmp_dir))
 
