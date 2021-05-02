@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 from typing import Dict
 from typing import List
+from typing import Mapping
 from typing import Optional
 from typing import Tuple
 from typing import Union
@@ -509,7 +510,7 @@ The <c1>init</c1> command creates a basic <comment>pyproject.toml</> file in the
 
     def _format_requirements(
         self, requirements: List[Dict[str, str]]
-    ) -> Dict[str, Union[str, Dict[str, str]]]:
+    ) -> Mapping[str, Union[str, Mapping[str, str]]]:
         requires = {}
         for requirement in requirements:
             name = requirement.pop("name")
@@ -530,7 +531,7 @@ The <c1>init</c1> command creates a basic <comment>pyproject.toml</> file in the
         author = author or default
 
         if author in ["n", "no"]:
-            return
+            return None
 
         m = AUTHOR_REGEX.match(author)
         if not m:

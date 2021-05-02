@@ -395,7 +395,7 @@ class PackageInfo:
                 # handle PKG-INFO in unpacked sdist root
                 dist = pkginfo.UnpackedSDist(path.as_posix())
             except ValueError:
-                return
+                return None
 
         info = cls._from_distribution(dist=dist)
         if info:

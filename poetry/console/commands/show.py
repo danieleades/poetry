@@ -268,6 +268,7 @@ lists all packages available."""
                 line += " " + description
 
             self.line(line)
+        return None
 
     def display_package_tree(
         self, io: "IO", package: "Package", installed_repo: "Repository"
