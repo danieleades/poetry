@@ -1266,7 +1266,7 @@ class Env:
         return self._run(cmd, **kwargs)
 
     def run_python_script(self, content: str, **kwargs: Any) -> str:
-        return self.run("python", "-W", "ignore", "-", input_=content, **kwargs)
+        return str(self.run("python", "-W", "ignore", "-", input_=content, **kwargs))
 
     def _run(self, cmd: List[str], **kwargs: Any) -> Union[int, str]:
         """
