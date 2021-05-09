@@ -1603,11 +1603,12 @@ class NullEnv(SystemEnv):
     def get_pip_command(self, embedded: bool = False) -> List[str]:
         return [self._bin("python"), self.pip_embedded if embedded else self.pip]
 
-    def _run(self, cmd: List[str], **kwargs: Any) -> int:
+    def _run(self, cmd: List[str], **kwargs: Any) -> Optional[int]:
         self.executed.append(cmd)
 
         if self._execute:
             return super()._run(cmd, **kwargs)
+        return None
 
     def execute(self, bin: str, *args: str, **kwargs: Any) -> Optional[int]:
         self.executed.append([bin] + list(args))

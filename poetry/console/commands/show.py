@@ -98,9 +98,9 @@ lists all packages available."""
         required_locked_packages = set([op.package for op in ops if not op.skipped])
 
         if self.option("no-dev"):
-            required_locked_packages = [
+            required_locked_packages = {
                 p for p in locked_packages if p.category == "main"
-            ]
+            }
 
         if package:
             pkg = None
