@@ -1155,11 +1155,13 @@ class Env:
     def usersite(self) -> Optional[Path]:
         if "usersite" in self.paths:
             return Path(self.paths["usersite"])
+        return None
 
     @property
     def userbase(self) -> Optional[Path]:
         if "userbase" in self.paths:
             return Path(self.paths["userbase"])
+        return None
 
     @property
     def purelib(self) -> Path:
@@ -1264,7 +1266,7 @@ class Env:
         return self._run(cmd, **kwargs)
 
     def run_python_script(self, content: str, **kwargs: Any) -> str:
-        return self.run("python", "-W", "ignore", "-", input_=content, **kwargs)
+        return str(self.run("python", "-W", "ignore", "-", input_=content, **kwargs))
 
     def _run(self, cmd: List[str], **kwargs: Any) -> Union[int, str]:
         """
@@ -1350,7 +1352,7 @@ class Env:
 
         return str(bin_path)
 
-    def __eq__(self, other: "Env") -> bool:
+    def __eq__(self, other: object) -> bool:
         return other.__class__ == self.__class__ and other.path == self.path
 
     def __repr__(self) -> str:
@@ -1601,17 +1603,19 @@ class NullEnv(SystemEnv):
     def get_pip_command(self, embedded: bool = False) -> List[str]:
         return [self._bin("python"), self.pip_embedded if embedded else self.pip]
 
-    def _run(self, cmd: List[str], **kwargs: Any) -> int:
+    def _run(self, cmd: List[str], **kwargs: Any) -> Optional[int]:
         self.executed.append(cmd)
 
         if self._execute:
             return super()._run(cmd, **kwargs)
+        return None
 
     def execute(self, bin: str, *args: str, **kwargs: Any) -> Optional[int]:
         self.executed.append([bin] + list(args))
 
         if self._execute:
             return super().execute(bin, *args, **kwargs)
+        return None
 
     def _bin(self, bin: str) -> str:
         return bin
